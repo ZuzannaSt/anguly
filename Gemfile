@@ -26,6 +26,8 @@ group :development, :test do
   gem 'pry-rails'
   gem 'capybara'
   gem "selenium-webdriver"
+  gem 'teaspoon-jasmine'
+  gem 'phantomjs'
 end
 
 gem "foreman"
