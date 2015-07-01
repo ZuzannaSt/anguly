@@ -20,15 +20,16 @@ group :development, :test do
   gem 'byebug'
   gem 'web-console', '~> 2.0'
   gem 'spring'
+  gem 'rspec-rails'
+  gem 'database_cleaner'
+  gem 'factory_girl_rails'
+  gem 'pry-rails'
+  gem 'capybara'
+  gem "selenium-webdriver"
 end
 
-gem 'pry-rails', group: [:development, :test]
-
-gem 'rspec-rails'
-gem 'database_cleaner'
-gem 'factory_girl_rails'
-
 gem "foreman"
+
 group :production, :staging do
   gem "rails_12factor"
   gem "rails_stdout_logging"
