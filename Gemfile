@@ -12,7 +12,7 @@ gem 'jquery-rails'
 gem 'turbolinks'
 gem 'jbuilder', '~> 2.0'
 gem 'sdoc', '~> 0.4.0', group: :doc
-
+gem "bower-rails", "~> 0.9.2"
 gem 'bootstrap-sass'
 
 group :development, :test do
@@ -22,3 +22,7 @@ group :development, :test do
 end
 
 gem 'pry-rails', group: [:development, :test]
+
+gem 'rspec-rails'
+gem 'database_cleaner'
+gem 'factory_girl_rails'
