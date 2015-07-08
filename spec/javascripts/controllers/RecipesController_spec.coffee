@@ -4,24 +4,28 @@ describe "RecipesController", ->
   location     = null
   routeParams  = null
   resource     = null
+
+  # access injected service later
   httpBackend  = null
 
-  setupController =(keywords,results)->
+  setupController = (keywords,results)->
     inject(($location, $routeParams, $rootScope, $resource, $httpBackend, $controller)->
       scope       = $rootScope.$new()
       location    = $location
       resource    = $resource
-      httpBackend = $httpBackend
       routeParams = $routeParams
       routeParams.keywords = keywords
+
+      # capture the injected service
+      httpBackend = $httpBackend
 
       if results
         request = new RegExp("\/recipes.*keywords=#{keywords}")
         httpBackend.expectGET(request).respond(results)
 
-      ctrl        = $controller('RecipesController',
-                                $scope: scope
-                                $location: location)
+      ctrl = $controller('RecipesController',
+                         $scope: scope
+                         $location: location)
     )
 
   beforeEach(module("anguly"))
@@ -31,12 +35,20 @@ describe "RecipesController", ->
     httpBackend.verifyNoOutstandingRequest()
 
   describe 'controller initialization', ->
+    describe 'recipe is found', ->
+      beforeEach(setupController())
+      it 'loads the given recipe', ->
+        httpBackend.flush()
+        expect(scope.recipe).toEqualData(fakeRecipe)
+    describe 'recipe is not found', ->
+      beforeEach(setupController(false))
+      it 'loads the given recipe', ->
+        httpBackend.flush()
+        expect(scope.recipe).toBe(null)
     describe 'when no keywords present', ->
       beforeEach(setupController())
-
       it 'defaults to no recipes', ->
         expect(scope.recipes).toEqualData([])
-
     describe 'with keywords', ->
       keywords = 'foo'
       recipes = [
@@ -63,5 +75,5 @@ describe "RecipesController", ->
     it 'redirects to itself with a keyword param', ->
       keywords = 'foo'
       scope.search(keywords)
-      expect(location.path()).toBe("/")
+      expect(location.path()).toBe('/')
       expect(location.search()).toEqualData({keywords: keywords})
